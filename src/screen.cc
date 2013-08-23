@@ -387,6 +387,11 @@ void CScreen::drawIndex()
     }
 
     /**
+     * Selected messages
+     */
+    std::vector < std::string > smessages = global->get_selected_messages();
+
+    /**
      * OK so we have (at least one) selected maildir and we have messages.
      */
     int row = 0;
@@ -448,10 +453,20 @@ void CScreen::drawIndex()
                 attron( COLOR_PAIR(m_colours[unread_colour]) );
         }
 
+        /**
+         * Is this folder part of our selected set?
+         */
+        bool selectedSet = false;
+        if (cur != NULL)
+        {
+            if (std::find(smessages.begin(), smessages.end(), cur->path()) != smessages.end())
+                selectedSet = true;
+        }
+
         std::string path = "";
 
         if (cur != NULL)
-            buf =  cur->format();
+            buf =  cur->format( selectedSet );
 
         /**
          * Pad.
@@ -587,7 +602,7 @@ void CScreen::drawMessage()
         /**
          * Get the header-value, via the formatter.
          */
-        UTFString value = cur->format( header );
+        UTFString value = cur->format(false, header );
 
         /**
          * Truncate to avoid long-wraps.
