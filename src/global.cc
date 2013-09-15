@@ -610,3 +610,18 @@ std::unordered_map<std::string, std::string *> CGlobal::get_variables()
 {
     return( m_variables );
 }
+
+
+/**
+ * set selected message to message with filepath path
+ */
+void CGlobal::set_selected_message(UTFString path)
+{
+    for (unsigned int i=0; i<m_messages->size(); ++i)
+    {
+        if (m_messages->at(i)->path() == path)
+        {
+            m_cur_message = i;
+        }
+    }
+}

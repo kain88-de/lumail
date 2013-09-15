@@ -48,18 +48,29 @@ int index_offset(lua_State *L)
  */
 int jump_index_to(lua_State * L)
 {
-    int offset = lua_tonumber(L, -1);
+    if (lua_isnumber(L, -1))
+    {
+        int offset = lua_tonumber(L, -1);
 
-    if ( offset < 0 )
-        offset = 0;
+        if ( offset < 0 )
+            offset = 0;
 
-    CGlobal *global = CGlobal::Instance();
-    global->set_selected_message(offset);
+        CGlobal *global = CGlobal::Instance();
+        global->set_selected_message(offset);
 
-    /**
-     * We've changed messages, so reset the current position.
-     */
-    global->set_message_offset(0);
+        /**
+        * We've changed messages, so reset the current position.
+        */
+        global->set_message_offset(0);
+    }
+    else if (lua_isstring(L, -1)) 
+    {
+        const char *str = lua_tostring(L, -1);
+        UTFString offset(str);
+
+        CGlobal *global = CGlobal::Instance();
+        global->set_selected_message(offset);
+    }
 
     return (0);
 }

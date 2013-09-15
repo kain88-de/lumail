@@ -562,7 +562,14 @@ end
 -- to nothing
 --
 function jump_to_first_unread()
-   jump_to_next_unread_from_pos(0)
+    old_limit = index_limit()
+    index_limit('new')
+    if count_messages() > 0 then
+        jump_index_to(0)
+        path = msg_path()
+    end
+    index_limit(old_limit)
+    jump_index_to(path)
 end
 
 

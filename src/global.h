@@ -165,7 +165,7 @@ public:
             m_cur_message = 0;
         }
     }
-
+    void set_selected_message(UTFString path);
 
     /**
      * Get/set the message offset.
@@ -194,7 +194,6 @@ public:
      * Get the table of all known settings.
      */
     std::unordered_map<std::string, std::string *> get_variables();
-
 
 protected:
 

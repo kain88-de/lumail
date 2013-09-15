@@ -61,6 +61,7 @@ int file_exists(lua_State *L);
 int is_directory(lua_State *L);
 int is_maildir(lua_State *L);
 int load_directory(lua_State *L);
+int msg_path(lua_State *L);
 
 
 /**

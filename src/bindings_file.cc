@@ -33,6 +33,7 @@
 #include "file.h"
 #include "global.h"
 #include "maildir.h"
+#include "message.h"
 
 
 
@@ -175,3 +176,17 @@ int load_directory(lua_State *L)
     return 1;
 }
 
+/*
+ * return the file path of the currently selected message
+ */
+int msg_path(lua_State *L)
+{
+    CGlobal *global = CGlobal::Instance();
+
+    std::vector<CMessage *> *messages = global->get_messages();
+    int selected = global->get_selected_message();
+    std::string path = messages->at(selected)->path();
+
+    lua_pushstring(L, path.c_str());
+    return 1;
+}

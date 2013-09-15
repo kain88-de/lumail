@@ -85,6 +85,7 @@ struct CLuaMapping primitive_list[] =
     {"is_directory", "Is the given path a directory?", (lua_CFunction) is_directory },
     {"is_maildir", "Is the given path a maildir?", (lua_CFunction) is_maildir },
     {"load_directory", "Load *.lua from beneath the given directory.  (Not recursively.)", (lua_CFunction) load_directory },
+    {"msg_path", "returns msg filepath", (lua_CFunction) msg_path },
 
 /**
  * Folder Selection: defined in src/bindings_folders.cc
