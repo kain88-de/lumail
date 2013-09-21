@@ -101,9 +101,10 @@ struct CLuaMapping primitive_list[] =
  */
     {"add_selected_message", "Add the current message to the list of selected messages", (lua_CFunction) add_selected_message },
     {"clear_selected_messages", "Clear the list of selected-messages.", (lua_CFunction) clear_selected_messages },
-    {"selected_messages", "Return the currently selected messages.", (lua_CFunction) selected_messages },
-    {"set_selected_message", "Remove all currently selected messages and add the single named one to the set.", (lua_CFunction) set_selected_message },
+    {"get_selected_messages", "Return the currently selected messages.", (lua_CFunction) get_selected_messages },
     {"toggle_selected_message", "Toggle the message into/out-of the selected set.", (lua_CFunction) toggle_selected_message },
+    {"set_selected_message", "Remove all currently selected messages and add the single named one to the set.", (lua_CFunction) set_selected_message },
+    {"count_selected_messages", "Return the number of selected messages", (lua_CFunction) count_selected_messages },
 
 /**
  * Get/Set variables: defined in src/variables.cc
