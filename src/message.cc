@@ -613,7 +613,7 @@ UTFString CMessage::format( bool selected, std::string fmt )
     /**
      * The variables we know about.
      */
-    const char *fields[10] = { "FLAGS", "FROM", "TO", "SUBJECT",  "DATE", "YEAR", "MONTH", "MON", "DAY", 0 };
+    const char *fields[11] = { "CHECK", "FLAGS", "FROM", "TO", "SUBJECT",  "DATE", "YEAR", "MONTH", "MON", "DAY", 0 };
     const char **std_name = fields;
 
 
@@ -652,16 +652,19 @@ UTFString CMessage::format( bool selected, std::string fmt )
             }
             if ( strcmp(std_name[i] , "FLAGS" ) == 0 )
             {
-                if ( selected )
-                    body = "<X> ";
-                else
-                    body = "< > ";
                 /**
                  * Ensure the flags are suitably padded.
                  */
                 body += flags();
 
                 while( body.size() < 4 )
+                    body += " ";
+            }
+            if ( strcmp(std_name[i], "CHECK" ) == 0 )
+            {
+                if ( selected )
+                    body += "x";
+                else
                     body += " ";
             }
             if ( strcmp(std_name[i] , "SUBJECT" ) == 0 )
