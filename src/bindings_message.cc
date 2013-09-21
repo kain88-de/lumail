@@ -36,9 +36,7 @@
 #include "variables.h"
 
 
-
 int unused __attribute__((unused));
-
 
 
 /**
@@ -1311,8 +1309,8 @@ int add_selected_message(lua_State * L)
         if ( display->size()  == 0 )
             return 0;
 
-        CMessage *x = display->at(selected);
-        path = x->path();
+        CMessage *msg = display->at(selected);
+        path = msg->path();
         global->add_message(path.c_str());
     }
     else
@@ -1357,11 +1355,10 @@ int clear_selected_messages(lua_State * L)
 /**
  * Get the currently selected messages.
  */
-int selected_messages(lua_State * L)
+int get_selected_messages(lua_State * L)
 {
     CGlobal *global = CGlobal::Instance();
     std::vector<std::string> selected = global->get_selected_messages();
-    std::vector<std::string>::iterator it;
 
     /**
      * Create the table.
@@ -1369,10 +1366,10 @@ int selected_messages(lua_State * L)
     lua_newtable(L);
 
     int i = 1;
-    for (it = selected.begin(); it != selected.end(); ++it)
+    for (std::string path : selected)
     {
-        lua_pushnumber(L,i);
-        lua_pushstring(L,(*it).c_str());
+        lua_pushnumber(L, i);
+        lua_pushstring(L, path.c_str());
         lua_settable(L,-3);
         i++;
     }
@@ -1454,8 +1451,8 @@ int toggle_selected_message(lua_State * L)
             return 0;
 
         int selected = global->get_selected_message();
-        CMessage *x = display->at(selected);
-        toggle = x->path();
+        CMessage *msg = display->at(selected);
+        toggle = msg->path();
     }
     else
     {
@@ -1476,4 +1473,12 @@ int toggle_selected_message(lua_State * L)
         lua->execute("on_message_selection(\"" + toggle + "\");");
     }
     return (0);
+}
+
+int count_selected_messages(lua_State * L)
+{
+    CGlobal *global = CGlobal::Instance();
+    std::vector < std::string > smessages = global->get_selected_messages();
+    lua_pushinteger(L, smessages.size());
+    return 1;
 }
